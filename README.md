@@ -1,5 +1,7 @@
 # EyeFlask
 
+[![Build Status](https://travis-ci.org/n8henrie/eyeflask.svg?branch=master)](https://travis-ci.org/n8henrie/eyeflask)
+
 Simple [Flask](http://flask.pocoo.org)-based Python3 EyeFi server
 
 - Documentation: [eyeflask.readthedocs.org](https://eyeflask.readthedocs.org)

@@ -1,0 +1,8 @@
+# /etc/systemd/system/upload_scans.service
+[Unit]
+Description=Example service file to be used with systemd path file
+
+[Service]
+Type=simple
+# https://gist.github.com/n8henrie/1e8ab5bcf1a3af2c20de
+ExecStart=/usr/bin/python3 /home/user/scripts/dbox_sync.py --token asdf --source /home/user/uploads --dest stuff/scans --default

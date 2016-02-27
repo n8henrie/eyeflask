@@ -1,0 +1,10 @@
+# /etc/systemd/system/upload_scans.path
+[Unit]
+Description=Example systemd path file to trigger upload_scans.service on changes of a path
+
+[Path]
+Unit=upload_scans.service
+PathChanged=/home/user/uploads
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,14 @@
+# /etc/systemd/system/eyeflask.service
+[Unit]
+Description=EyeFlask
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/eyeflask -c /home/user/.eyeflask.cfg
+Restart=on-failure
+User=eyeflask
+
+[Install]
+WantedBy=multi-user.target

@@ -79,10 +79,10 @@ def start_session():
 
 @server.route("/api/soap/eyefilm/v1/upload", methods=['POST'])
 def upload_photo():
-    current_app.logger.debug(request.form.get("SOAPENVELOPE"))
     root = etree.fromstring(request.form.get("SOAPENVELOPE"))
 
     filename = root.find(".//filename").text
+    current_app.logger.debug("Got upload request for: {}".format(filename))
 
     # macaddress = root.find(".//macaddress").text
     # fileid = root.find(".//fileid").text
@@ -92,13 +92,16 @@ def upload_photo():
     # flags = root.find(".//flags").text
 
     integrity_digest = request.form.get("INTEGRITYDIGEST")
-    current_app.logger.debug(integrity_digest)
+    current_app.logger.debug("Received INTEGRITYDIGEST: "
+                             "{}".format(integrity_digest))
 
     upfile = request.files.get("FILENAME")
 
     if upfile and allowed_file(upfile.filename):
         upload_key = current_app.config.get('UPLOAD_KEY')
         true_digest = make_digest(upfile, upload_key)
+        current_app.logger.debug("Calculated integritydigest: "
+                                 "{}".format(true_digest))
 
         if integrity_digest == true_digest:
             upload_dir = current_app.config['UPLOAD_FOLDER']

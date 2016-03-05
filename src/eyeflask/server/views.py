@@ -5,13 +5,11 @@ https://code.google.com/archive/p/sceye-fi/wikis/UploadProtocol.wiki
 
 from flask import current_app, request, render_template, abort
 import defusedxml.ElementTree as etree
-from werkzeug import secure_filename
-import os.path
 from . import server
 import tarfile
-import os
 import uuid
 from .crypto import create_credential, make_digest
+import time
 
 
 def allowed_file(filename):
@@ -104,28 +102,25 @@ def upload_photo():
 
         if integrity_digest == true_digest:
             upload_dir = current_app.config['UPLOAD_FOLDER']
-            filename = secure_filename(upfile.filename)
-            filepath = os.path.join(upload_dir, filename)
 
             upfile.seek(0)
-            upfile.save(filepath)
 
-            # Eye-Fi sets the image file's a/c/m times to some wonky date from
-            # 2010 -- fix by setting them to the tarfile's creation time.
-            # Unfortunately this will be the upload time and not the scan time,
-            # but it's the best I can do at the moment.
-            creation_time = os.stat(filepath).st_ctime
-
-            with tarfile.open(filepath) as archive:
+            with tarfile.open(fileobj=upfile) as archive:
                 if len(archive.getmembers()) == 1:
                     img_file = archive.getmembers()[0]
-                    img_file.mtime = creation_time
+
+                    # Eye-Fi sets the image file's a/c/m times to some wonky
+                    # date from 2010 -- fix by setting them to the current
+                    # time. Tried using the tarfile's creation time and it was
+                    # just the upload time, which is no better). Would ideally
+                    # find a way to set it to the time it was scanned, in case
+                    # that happened significantly prior to connecting to
+                    # EyeFlask.
+                    img_file.mtime = time.time()
+
                     archive.extract(img_file, path=upload_dir)
 
-            # Delete `.tar` file after extracting the image
-            os.remove(filepath)
-
-            return render_template("upload_photo.xml", success="true")
+                    return render_template("upload_photo.xml", success="true")
 
     # If you got here, either `INTEGRITYDIGEST` was wrong, the file wasn't
     # received, or it had an illegal filename.

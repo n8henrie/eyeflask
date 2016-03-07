@@ -4,7 +4,6 @@ Cryptographic functions for use in eyeflask.server
 
 import binascii
 import hashlib
-import struct
 import array
 
 
@@ -32,8 +31,7 @@ def gen_checksums(file_handler):
     while True:
         chunk = file_handler.read(512)
         if chunk:
-            tcp_sum = sum(int(short[0])
-                          for short in struct.iter_unpack("<H", chunk))
+            tcp_sum = sum(array.array("H", chunk))
 
             # while tcp_sum > 65535
             while (tcp_sum >> 16):

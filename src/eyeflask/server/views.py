@@ -23,10 +23,13 @@ def make_snonce():
 
 
 @server.route("/api/soap/eyefilm/v1", methods=['POST'])
-def start_session():
+def handle_SOAP():
     upload_key = current_app.config.get('UPLOAD_KEY')
 
-    if request.headers.get('SOAPAction') == '"urn:StartSession"':
+    soapaction = request.headers.get('SOAPAction')
+    current_app.logger.debug("Received SOAPAction: {}".format(soapaction))
+
+    if soapaction == '"urn:StartSession"':
         root = etree.fromstring(request.data)
 
         transfermode = root.find(".//transfermode").text
@@ -44,7 +47,7 @@ def start_session():
                                transfermodetimestamp=transfermodetimestamp,
                                credential=credential, snonce=snonce)
 
-    elif request.headers.get('SOAPAction') == '"urn:GetPhotoStatus"':
+    elif soapaction == '"urn:GetPhotoStatus"':
         root = etree.fromstring(request.data)
 
         macaddress = root.find(".//macaddress").text
@@ -67,7 +70,7 @@ def start_session():
         else:
             return abort(403)
 
-    elif request.headers.get('SOAPAction') == '"urn:MarkLastPhotoInRoll"':
+    elif soapaction == '"urn:MarkLastPhotoInRoll"':
         root = etree.fromstring(request.data)
 
         # Unused, here for future reference

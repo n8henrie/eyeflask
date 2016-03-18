@@ -127,3 +127,15 @@ NB: I do **not** plan on providing support for nginx / gunicorn setups, as I
 don't know enough about it to be particularly helpful. I just verified that it
 seemed to work. (Just FYI, Gunicorn *without* nginx did **not** seem to work
 unless I used one of the async workers, kept getting timeouts.)
+
+### Why am I getting repeat or unreliable file uploads on my Raspberry Pi?
+
+I'm not sure. I was getting *excellent* reliability when running EyeFlask on my
+Macbook Air and *very* poor reliability on my Raspberry Pi B+ with EyeFlask
+0.1.0. It seemed like the file would be uploaded exctracted without issue, but
+the EyeFi card kept sending the same file over and over, leading me to believe
+that the confirmation response wasn't getting received every time. I thought it
+might have something to do with slow response times, so I did a little code
+optimization with 0.1.1 which seems to have helped. I also gave up and put
+EyeFlask behind a gunicorn / nginx setup, and between the two of these changes
+I have much better upload reliability.

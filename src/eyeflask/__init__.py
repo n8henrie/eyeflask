@@ -36,6 +36,13 @@ def create_app(config=None):
         print("Instance folder: {}\n".format(app.instance_path))
         raise
 
+    app.debug_log_format = '\n'.join([
+        80 * '-',
+        '%(asctime)s %(levelname)s in %(module)s [%(pathname)s:%(lineno)d]:',
+        '%(message)s',
+        80 * '-'
+        ])
+
     from .server import server
     app.register_blueprint(server)
 

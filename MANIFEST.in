@@ -6,7 +6,7 @@ include README.md
 include requirements.txt
 include requirements-dev.txt
 
-graft src
+graft eyeflask
 recursive-include docs *.md *.rst conf.py Makefile
 
 prune docs/md

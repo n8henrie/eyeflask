@@ -22,7 +22,7 @@ with open('requirements-dev.txt') as dev_requirements_file:
     dev_requirements = dev_requirements_file.read().splitlines()
 
 version_regex = re.compile(r'__version__ = [\'\"]((\d+\.?)+)[\'\"]')
-with open('src/eyeflask/__init__.py') as f:
+with open('eyeflask/__init__.py') as f:
     vlines = f.readlines()
 __version__ = next(re.match(version_regex, line).group(1) for line in vlines
                    if re.match(version_regex, line))
@@ -35,8 +35,7 @@ setup(
     author="Nathan Henrie",
     author_email="nate@n8henrie.com",
     url="https://github.com/n8henrie/eyeflask",
-    packages=find_packages('src'),
-    package_dir={"": "src"},
+    packages=find_packages(),
     entry_points={
         'console_scripts': ['eyeflask=eyeflask.cli:run']
         },

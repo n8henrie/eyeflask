@@ -6,4 +6,4 @@ server = Blueprint(
     template_folder='templates'
 )
 
-from . import views
+from . import views  # noqa

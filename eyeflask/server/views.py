@@ -122,7 +122,7 @@ def upload_photo():
                 upload_path.mkdir(mode=0o755, parents=True, exist_ok=True)
 
             # Workaround for Python 3.4
-            exept TypeError:
+            except TypeError:
                 try:
                     upload_path.mkdir(mode=0o755, parents=True)
                 except FileExistsError:

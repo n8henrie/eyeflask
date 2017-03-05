@@ -25,11 +25,16 @@ security protocols used by Eye-Fi Server.
 
 ## Quickstart
 
-1. `pip3 install eyeflask`
+Using a virtual env is highly recommended. Since EyeFlask is Python 3.4+ only,
+there's no excuse not to use one!
+
+1. `python3 -m venv venv` on some systems may need to install venv for
+   Python3.4 (e.g. `sudo apt-get install python3.4-venv`)
+1. `venv/bin/pip3 install eyeflask`
 1. Copy `eyeflask/extras/eyeflask-sample.cfg` to `eyeflask.cfg`, modify
    with your values, and put it in [your instance
    folder](http://flask.pocoo.org/docs/0.10/config/#instance-folders)
-1. Run: `eyeflask` (or `venv/bin/python -m eyeflask.cli`)
+1. Run: `venv/bin/eyeflask`
 1. Scan some stuff, see if it ends up in your uploads folder
 
 ### Development Setup

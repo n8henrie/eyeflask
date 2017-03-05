@@ -3,13 +3,21 @@
 https://code.google.com/archive/p/sceye-fi/wikis/UploadProtocol.wiki
 """
 
-from flask import current_app, request, render_template, abort
-import defusedxml.ElementTree as etree
-from . import server
+import pathlib
 import tarfile
-import uuid
-from .crypto import create_credential, make_digest
 import time
+import uuid
+from datetime import datetime
+
+import defusedxml.ElementTree as etree
+from flask import current_app, request, render_template, abort
+
+from . import server
+from .crypto import create_credential, make_digest
+
+
+def make_path(upload_dir):
+    return pathlib.Path(datetime.strftime(datetime.now(), upload_dir))
 
 
 def allowed_file(filename):
@@ -108,6 +116,17 @@ def upload_photo():
 
         if integrity_digest == true_digest:
             upload_dir = current_app.config['UPLOAD_FOLDER']
+            upload_path = make_path(upload_dir)
+
+            try:
+                upload_path.mkdir(mode=0o755, parents=True, exist_ok=True)
+
+            # Workaround for Python 3.4
+            exept TypeError:
+                try:
+                    upload_path.mkdir(mode=0o755, parents=True)
+                except FileExistsError:
+                    pass
 
             upfile.seek(0)
 
@@ -124,7 +143,7 @@ def upload_photo():
                     # EyeFlask.
                     img_file.mtime = time.time()
 
-                    archive.extract(img_file, path=upload_dir)
+                    archive.extract(img_file, path=str(upload_path))
 
                     return render_template("upload_photo.xml", success="true")
 

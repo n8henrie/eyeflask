@@ -46,6 +46,14 @@ security protocols used by Eye-Fi Server.
 1. Run: `eyeflask` (or `venv/bin/python -m eyeflask.cli`)
 1. Scan some stuff, see if it ends up in your uploads folder
 
+## Configuration
+
+- `UPLOAD_KEY`: See FAQ, below
+- `UPLOAD_FOLDER`: Destination folder for uploads. May optionally be a
+  [strftime](https://docs.python.org/3.6/library/datetime.html#strftime-and-strptime-behavior)
+  string to specify a subfolder format (e.g.
+  `/path/to/eyeflask-uploads/%Y/%m-%d/')
+
 ## Extras
 
 EyeFlask will help get the images uploaded and extracted to your server (e.g. a

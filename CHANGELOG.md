@@ -1,4 +1,17 @@
-# History
+# [Changelog](http://keepachangelog.com)
+
+## 0.1.3 :: 20170310
+
+- Add strftime based subfolders to config (see issue #2)
+- Encourage use of virtualenv in the README
+- Test docs creation in Travis
+- Fix some flake8 compliants
+
+## 0.1.2 :: 20170303
+
+- Python 3.6 compatibility
+- Stop using `src/` subdirectory
+- Try to fix some Pandoc exceptions
 
 ## 0.1.1 :: 20160318
 

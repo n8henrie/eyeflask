@@ -9,9 +9,10 @@ except ImportError:
 try:
     import pypandoc
     readme = pypandoc.convert('README.md', 'rst')
-    history = pypandoc.convert('HISTORY.md', 'rst')
+    history = pypandoc.convert('CHANGELOG.md', 'rst')
 except (ImportError, OSError):
-    with open('README.md') as readme_file, open('HISTORY.md') as history_file:
+    with open('README.md') as readme_file, \
+            open('CHANGELOG.md') as history_file:
         readme = readme_file.read()
         history = history_file.read()
 
@@ -48,8 +49,8 @@ setup(
         "Natural Language :: English",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.4",
-        "Programming Language :: Python :: 3.5"
-        "Programming Language :: Python :: 3.6"
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
     ],
     extras_require={
         "dev": dev_requirements

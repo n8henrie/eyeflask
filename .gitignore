@@ -54,4 +54,4 @@ instance/
 src/instance/
 
 # Extracted during tests
-tests/*.jpg
+tests/*.[jJ][pP][gG]

@@ -1,10 +1,11 @@
 """test_eyeflask.py
 Basic tests for eyeflask"""
 
+import defusedxml.ElementTree as etree
+
 from eyeflask.server.crypto import create_credential, make_digest
 from .mock_payloads import (start_session, get_photo_status,
                             mark_last_photo, upload_photo)
-import defusedxml.ElementTree as etree
 
 
 def test_create_credential(client):
@@ -54,7 +55,7 @@ def test_photostatus(client):
     assert response.status_code == 200
 
 
-def test_uploadphoto(client):
+def test_uploadphoto(client, tmpdir):
     """Tests uploading of test file (test.jpg.tar, in tests folder)."""
 
     with open("tests/test.jpg.tar", "rb") as test_file:
@@ -65,6 +66,9 @@ def test_uploadphoto(client):
                 "INTEGRITYDIGEST": "c5a1a3dc5bfbf1244b5ae140270dd6a9"
                 }
 
+        config = client.application.config
+        tmp_upload_dir = str(tmpdir / config['UPLOAD_FOLDER'])
+        config['UPLOAD_FOLDER'] = tmp_upload_dir
         response = client.post("/api/soap/eyefilm/v1/upload", data=data,
                                content_type='multipart/form-data')
     assert response.status_code == 200

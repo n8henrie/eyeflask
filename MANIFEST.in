@@ -1,12 +1,12 @@
 include AUTHORS.md
 include CONTRIBUTING.md
-include HISTORY.md
+include CHANGELOG.md
 include LICENSE
 include README.md
 include requirements.txt
 include requirements-dev.txt
 
-graft src
+graft eyeflask
 recursive-include docs *.md *.rst conf.py Makefile
 
 prune docs/md

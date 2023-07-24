@@ -23,7 +23,7 @@ clean-build:
 	rm -fr build/
 	rm -fr dist/
 	rm -fr *.egg-info
-	rm -fr src/*.egg-info
+	rm -fr *.egg-info
 
 clean-pyc:
 	find . -name '*.pyc' -exec rm -f {} +
@@ -56,10 +56,10 @@ clean-docs:
 	rm -f docs/modules.rst
 
 docs: clean-docs
-	source venv/bin/activate && sphinx-apidoc -o docs/ src/eyeflask
+	source venv/bin/activate && sphinx-apidoc -o docs/ eyeflask
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
-	open docs/_build/html/index.html
+	-open docs/_build/html/index.html
 
 register: dist
 	twine register dist/*.whl

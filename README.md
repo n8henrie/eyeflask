@@ -25,11 +25,16 @@ security protocols used by Eye-Fi Server.
 
 ## Quickstart
 
-1. `pip3 install eyeflask`
-1. Copy `src/eyeflask/extras/eyeflask-sample.cfg` to `eyeflask.cfg`, modify
+Using a virtual env is highly recommended. Since EyeFlask is Python 3.4+ only,
+there's no excuse not to use one!
+
+1. `python3 -m venv venv` on some systems may need to install venv for
+   Python3.4 (e.g. `sudo apt-get install python3.4-venv`)
+1. `venv/bin/pip3 install eyeflask`
+1. Copy `eyeflask/extras/eyeflask-sample.cfg` to `eyeflask.cfg`, modify
    with your values, and put it in [your instance
    folder](http://flask.pocoo.org/docs/0.10/config/#instance-folders)
-1. Run: `eyeflask` (or `venv/bin/python -m eyeflask.cli`)
+1. Run: `venv/bin/eyeflask`
 1. Scan some stuff, see if it ends up in your uploads folder
 
 ### Development Setup
@@ -37,14 +42,22 @@ security protocols used by Eye-Fi Server.
 1. Clone the repo: `git clone https://github.com/n8henrie/eyeflask && cd
    eyeflask`
 1. Make a virtualenv: `python3 -m venv venv`
-1. Make an instance folder: `mkdir -p src/instance`
-1. Copy the config sample: `cp src/eyeflask/extras/eyeflask-sample.cfg
-   src/instance/eyeflask.cfg`
+1. Make an instance folder: `mkdir -p instance`
+1. Copy the config sample: `cp eyeflask/extras/eyeflask-sample.cfg
+   instance/eyeflask.cfg`
 1. Edit the config to include your upload directory and upload_key (see below):
-   `vim src/instance/eyeflask.cfg`
+   `vim instance/eyeflask.cfg`
 1. Install with dev dependencies: `venv/bin/pip install .[dev]`
 1. Run: `eyeflask` (or `venv/bin/python -m eyeflask.cli`)
 1. Scan some stuff, see if it ends up in your uploads folder
+
+## Configuration
+
+- `UPLOAD_KEY`: See FAQ, below
+- `UPLOAD_FOLDER`: Destination folder for uploads. May optionally be a
+  [strftime](https://docs.python.org/3.6/library/datetime.html#strftime-and-strptime-behavior)
+  string to specify a subfolder format (e.g.
+  `/path/to/eyeflask-uploads/%Y/%m-%d/')
 
 ## Extras
 
@@ -68,7 +81,7 @@ new scans to a Dropbox
 folder](https://gist.github.com/n8henrie/1e8ab5bcf1a3af2c20de) whenever a new
 one is added, or whatever command you'd like to run on all your scans.
 
-I've also included `src/eyeflask/extras/eyeflask.service`, which is a sample
+I've also included `eyeflask/extras/eyeflask.service`, which is a sample
 [systemd service
 file](https://www.freedesktop.org/software/systemd/man/systemd.service.html) to
 run EyeFlask at startup and restart it on errors.
@@ -112,13 +125,13 @@ setup. You'd probably be better off running it behind
 behind Flask alone for simplicity and because I haven't had any issues so far.
 
 If you want to give it a go with gunicorn / nginx, I've included an *extremely*
-simplified nginx configuration file: `src/eyeflask/extras/nginx.conf`. After
+simplified nginx configuration file: `eyeflask/extras/nginx.conf`. After
 installing `gunicorn` into your virtualenv, hopefully you'll be able to get it
 running behind nginx without much trouble with something like:
 
 ```
 venv/bin/pip install gunicorn
-venv/bin/gunicorn 'eyeflask:create_app("src/instance/eyeflask.cfg")'
+venv/bin/gunicorn 'eyeflask:create_app("instance/eyeflask.cfg")'
 ```
 
 For debugging you can also use the flags `--log-file=- --log-level=debug`.

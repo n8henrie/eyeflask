@@ -1,9 +1,11 @@
-import pytest
-from eyeflask import create_app
 import os.path
 
+import pytest
 
-@pytest.yield_fixture(scope="session")
+from eyeflask import create_app
+
+
+@pytest.fixture(scope="session")
 def client():
     test_config = 'test_config.cfg'
     test_config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),

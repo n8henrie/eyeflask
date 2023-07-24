@@ -99,7 +99,7 @@ Before you submit a pull request, check that it meets these guidelines:
     the feature to the list in README.md
 1.  The pull request should work for Python 3.4 and 3.5. If I have included a
     `.travis.yml` file in the repo, check
-    <https://travis-ci.org/n8henrie/fauxmo/pull_requests> and make sure that
+    <https://travis-ci.org/n8henrie/eyeflask/pull_requests> and make sure that
     the tests pass for all supported Python versions.
 
 ## Tips
